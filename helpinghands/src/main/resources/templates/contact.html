@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Contact - Helping Hands</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- 🔥 NAVBAR -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <h1 class="text-xl font-bold text-orange-500">❤️ Helping Hands</h1>
+
+        <div class="space-x-6 text-sm hidden md:block">
+            <a href="/" class="hover:text-orange-500">Home</a>
+            <a href="/about" class="hover:text-orange-500">About</a>
+            <a href="/contact" class="text-orange-500 font-semibold">Contact</a>
+        </div>
+
+        <a href="/login"
+           class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">
+            Admin Login
+        </a>
+
+    </div>
+</nav>
+
+<!-- 🔥 HERO SECTION -->
+<section class="bg-gradient-to-r from-blue-100 to-white py-14 text-center">
+    <h2 class="text-4xl font-bold">Get in Touch</h2>
+    <p class="text-gray-600 mt-3">
+        Have questions or want to help? We'd love to hear from you ❤️
+    </p>
+</section>
+
+<!-- 🔥 MAIN CONTENT -->
+<section class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10">
+
+    <!-- 📌 LEFT SIDE (INFO) -->
+    <div class="space-y-6">
+
+        <h3 class="text-2xl font-semibold">Contact Information</h3>
+
+        <p class="text-gray-600">
+            You can reach out to us for donations, support, or any queries.
+        </p>
+
+        <!-- INFO BOX -->
+        <div class="space-y-4">
+
+            <div class="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
+                <i data-lucide="mail" class="text-orange-500"></i>
+                <span>support@helpinghands.com</span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
+                <i data-lucide="phone" class="text-orange-500"></i>
+                <span>+91 98765 43210</span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
+                <i data-lucide="map-pin" class="text-orange-500"></i>
+                <span>India</span>
+            </div>
+
+        </div>
+
+        <!-- SMALL NOTE -->
+        <div class="bg-orange-50 p-4 rounded-lg text-sm text-orange-700">
+            We usually respond within 24 hours.
+        </div>
+
+    </div>
+
+    <!-- 📩 RIGHT SIDE (FORM) -->
+    <div class="bg-white p-8 rounded-xl shadow-md">
+
+        <h3 class="text-xl font-semibold mb-6">Send Message</h3>
+
+        <form th:action="@{/contact}" method="post" class="space-y-5">
+
+            <!-- NAME -->
+            <div>
+                <label class="text-sm">Your Name</label>
+                <input type="text" name="name" required
+                       class="w-full mt-1 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none">
+            </div>
+
+            <!-- EMAIL -->
+            <div>
+                <label class="text-sm">Your Email</label>
+                <input type="email" name="email" required
+                       class="w-full mt-1 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none">
+            </div>
+
+            <!-- MESSAGE -->
+           <div>
+    <label class="text-sm">Message</label>
+    <textarea name="message" rows="4" required maxlength="500"
+              class="w-full mt-1 border p-3 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"></textarea>
+</div>
+
+            <!-- BUTTON -->
+            <button type="submit"
+                    class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg transition duration-300">
+                Send Message
+            </button>
+
+        </form>
+
+        <!-- SUCCESS MESSAGE -->
+        <div th:if="${param.success}"
+             class="mt-4 text-green-600 text-sm text-center">
+            ✅ Message sent successfully!
+        </div>
+
+    </div>
+
+</section>
+
+<!-- 🔥 FOOTER -->
+<footer class="bg-white border-t mt-10">
+    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-gray-500 text-sm">
+        © 2026 Helping Hands. All rights reserved.
+    </div>
+</footer>
+
+<!-- ICON INIT -->
+<script>
+    lucide.createIcons();
+</script>
+
+</body>
+</html>

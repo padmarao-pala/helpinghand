@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>Helping Hands</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        .sticky-header{
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+<!-- ================= HEADER ================= -->
+
+<header class="sticky-header bg-white/90 backdrop-blur-md shadow-sm border-b">
+
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <!-- Logo -->
+        <h1 class="text-2xl font-bold text-orange-500">
+            ❤️ Helping Hands
+        </h1>
+
+        <!-- Nav -->
+        <nav class="hidden md:flex space-x-8 font-medium">
+
+            <a href="/" class="hover:text-orange-500 transition">
+                Home
+            </a>
+
+            <a href="/about" class="hover:text-orange-500 transition">
+                About
+            </a>
+
+            <a href="#cases" class="hover:text-orange-500 transition">
+                Cases
+            </a>
+
+            <a href="/contact" class="hover:text-orange-500 transition">
+                Contact
+            </a>
+
+        </nav>
+
+        <!-- Login -->
+        <a href="/login"
+           class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg shadow-md transition">
+
+            Admin Login
+
+        </a>
+
+    </div>
+
+</header>
+
+<!-- ================= FLASH MESSAGE ================= -->
+
+<div th:if="${msg}" th:text="${msg}" id="flashMsg" style="display:none;"></div>
+
+<script th:if="${msg}">
+    Swal.fire({
+        icon: 'info',
+        title: 'Notice',
+        text: document.getElementById('flashMsg').innerText
+    });
+</script>
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="bg-gradient-to-r from-blue-50 via-white to-orange-50">
+
+    <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+
+        <!-- Left -->
+        <div data-aos="fade-right">
+
+            <h2 class="text-5xl font-bold leading-tight">
+
+                Help Children Get
+                <span class="text-orange-500">
+                    Medical Care
+                </span>
+                They Need
+
+            </h2>
+
+            <p class="mt-6 text-gray-600 text-lg leading-relaxed">
+
+                Your small donation can save a child’s life and bring hope
+                to families struggling with medical emergencies.
+
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-4">
+
+                <a href="#cases"
+                   class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl shadow-lg transition">
+
+                    View Cases
+
+                </a>
+
+                <a href="/about"
+                   class="border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-8 py-3 rounded-xl transition">
+
+                    Learn More
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Right -->
+        <div data-aos="fade-left">
+
+            <img src="https://images.unsplash.com/photo-1584515933487-779824d29309"
+                 class="rounded-3xl shadow-2xl w-full object-cover">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= STATS ================= -->
+
+<section class="bg-white py-12">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="grid md:grid-cols-4 gap-8 text-center">
+
+            <div data-aos="zoom-in">
+                <h2 class="text-4xl font-bold text-orange-500">120+</h2>
+                <p class="text-gray-600 mt-2">Children Helped</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <h2 class="text-4xl font-bold text-orange-500">₹5L+</h2>
+                <p class="text-gray-600 mt-2">Donations Raised</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <h2 class="text-4xl font-bold text-orange-500">50+</h2>
+                <p class="text-gray-600 mt-2">Volunteers</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <h2 class="text-4xl font-bold text-orange-500">30+</h2>
+                <p class="text-gray-600 mt-2">Successful Treatments</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= CASES ================= -->
+
+<section id="cases" class="max-w-7xl mx-auto px-6 py-20">
+
+    <div class="text-center mb-14">
+
+        <h3 class="text-4xl font-bold">
+            Help Children In Urgent Need
+        </h3>
+
+        <p class="text-gray-500 mt-3">
+            Every donation creates hope for a child.
+        </p>
+
+    </div>
+
+    <!-- Empty State -->
+    <div th:if="${#lists.isEmpty(children)}"
+         class="text-center text-gray-500 py-10 text-lg">
+
+        No active cases available.
+
+    </div>
+
+    <!-- Cards -->
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <div th:each="child : ${children}"
+             data-aos="fade-up"
+
+             class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300 relative">
+
+            <!-- Badge -->
+            <div class="absolute top-4 right-4">
+
+                <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+                    Urgent
+                </span>
+
+            </div>
+
+            <!-- Image -->
+            <img th:src="@{'/uploads/' + ${child.imageName}}"
+                 class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-orange-100">
+
+            <!-- Name -->
+            <h4 class="mt-4 text-xl font-bold text-center"
+                th:text="${child.name}">
+            </h4>
+
+            <!-- Disease -->
+            <p class="text-center text-gray-500 mt-1"
+               th:text="${child.disease}">
+            </p>
+
+            <!-- Calculation -->
+            <div class="mt-4"
+
+                 th:with="
+                 collected=${donationMap[child.id] != null ? donationMap[child.id] : 0},
+                 required=${child.requiredAmount != null ? child.requiredAmount : 0},
+                 percent=${required > 0 ? (collected * 100 / required) : 0},
+                 remaining=${required - collected}
+                 ">
+
+                <!-- Raised -->
+                <div class="text-center">
+
+                    <p class="text-green-600 font-bold text-lg">
+
+                        Raised: ₹
+                        <span th:text="${collected}"></span>
+
+                    </p>
+
+                    <p class="text-sm text-gray-500 mt-1">
+
+                        ₹<span th:text="${collected}"></span>
+                        /
+                        ₹<span th:text="${required}"></span>
+
+                    </p>
+
+                </div>
+
+                <!-- Progress -->
+                <div class="w-full bg-gray-200 h-3 mt-4 rounded-full overflow-hidden">
+
+                    <div class="bg-gradient-to-r from-orange-400 to-orange-600 h-3 rounded-full transition-all duration-500"
+
+                         th:style="'width:' + ${percent} + '%'">
+
+                    </div>
+
+                </div>
+
+                <!-- Percentage -->
+                <div class="flex justify-between text-sm text-gray-500 mt-2">
+
+                    <span>
+                        <span th:text="${percent}"></span>% Funded
+                    </span>
+
+                    <span>
+                        ₹<span th:text="${remaining}"></span> Left
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="mt-6 space-y-3">
+
+                <!-- Donate -->
+                <a th:if="${percent < 100}"
+                   th:href="@{'/donate/' + ${child.id}}"
+
+                   class="block w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl text-center font-medium transition">
+
+                    Donate Now
+
+                </a>
+
+                <!-- Fully Funded -->
+                <button th:if="${percent >= 100}"
+                        onclick="fullyFundedMsg()"
+
+                        class="block w-full bg-gray-400 text-white py-3 rounded-xl">
+
+                    🎉 Fully Funded
+
+                </button>
+
+              <a th:href="@{'/case/' + ${child.id}}"
+   class="block w-full border border-orange-500
+          text-orange-500 hover:bg-orange-500
+          hover:text-white py-3 rounded-xl text-center">
+
+    View Details
+
+</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+
+<section class="bg-white py-20">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+
+            <h2 class="text-4xl font-bold">
+                What People Say
+            </h2>
+
+            <p class="text-gray-500 mt-3">
+                Supporters and families sharing their experiences.
+            </p>
+
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm">
+
+                <p class="text-gray-600 italic">
+                    "Helping Hands saved my daughter’s life.
+                    Thank you for your support."
+                </p>
+
+                <h4 class="mt-4 font-bold">
+                    Priya
+                </h4>
+
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm">
+
+                <p class="text-gray-600 italic">
+                    "A truly trustworthy donation platform
+                    helping needy children."
+                </p>
+
+                <h4 class="mt-4 font-bold">
+                    Rahul
+                </h4>
+
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm">
+
+                <p class="text-gray-600 italic">
+                    "Very transparent and easy donation process."
+                </p>
+
+                <h4 class="mt-4 font-bold">
+                    Sneha
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-gray-900 text-white mt-10">
+
+    <div class="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-10">
+
+        <!-- ABOUT -->
+        <div>
+
+            <h3 class="text-2xl font-bold text-orange-400">
+                ❤️ Helping Hands
+            </h3>
+
+            <p class="mt-4 text-gray-300 leading-relaxed">
+
+                Helping children receive medical support and treatment
+                through public donations and community support.
+
+            </p>
+
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div>
+
+            <h3 class="text-xl font-bold mb-4 text-orange-400">
+                Quick Links
+            </h3>
+
+            <ul class="space-y-3 text-gray-300">
+
+                <li>
+                    <a href="/"
+                       class="hover:text-orange-400 transition duration-300">
+
+                        Home
+
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/about"
+                       class="hover:text-orange-400 transition duration-300">
+
+                        About
+
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/contact"
+                       class="hover:text-orange-400 transition duration-300">
+
+                        Contact
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- CONTACT -->
+        <div>
+
+            <h3 class="text-xl font-bold mb-4 text-orange-400">
+                Contact Us
+            </h3>
+
+            <p class="text-gray-300 leading-8">
+
+                📧 help@helpinghands.com
+                <br>
+
+                📞 +91 6304024094
+                <br>
+
+                📍 Hyderabad, India
+
+            </p>
+
+            <!-- SOCIAL MEDIA -->
+            <div class="flex gap-4 mt-5">
+
+                <!-- Facebook -->
+                <a href="https://facebook.com"
+                   target="_blank"
+
+                   class="bg-blue-600 hover:scale-110
+                          transition duration-300
+                          text-white w-10 h-10
+                          rounded-full flex
+                          items-center justify-center">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://instagram.com"
+                   target="_blank"
+
+                   class="bg-pink-500 hover:scale-110
+                          transition duration-300
+                          text-white w-10 h-10
+                          rounded-full flex
+                          items-center justify-center">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+                <!-- Twitter -->
+                <a href="https://twitter.com"
+                   target="_blank"
+
+                   class="bg-sky-500 hover:scale-110
+                          transition duration-300
+                          text-white w-10 h-10
+                          rounded-full flex
+                          items-center justify-center">
+
+                    <i class="fab fa-twitter"></i>
+
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://youtube.com"
+                   target="_blank"
+
+                   class="bg-red-600 hover:scale-110
+                          transition duration-300
+                          text-white w-10 h-10
+                          rounded-full flex
+                          items-center justify-center">
+
+                    <i class="fab fa-youtube"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="border-t border-gray-700 py-4 text-center text-sm text-gray-400">
+
+        © 2026 Helping Hands. All Rights Reserved.
+
+    </div>
+
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+
+<script>
+
+function fullyFundedMsg(){
+
+    Swal.fire({
+        icon:'info',
+        title:'Already Funded',
+        text:'🎉 This child is already fully funded. Please support another child!'
+    });
+
+}
+
+</script>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+AOS.init({
+    duration:1000
+});
+</script>
+
+</body>
+</html>

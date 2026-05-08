@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Login - Helping Hands</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #fff7ed, #eff6ff);
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen">
+
+<!-- LOGIN CARD -->
+<div class="bg-white shadow-2xl rounded-2xl w-full max-w-md p-8">
+
+    <!-- HEADER -->
+    <div class="text-center mb-6">
+
+        <h2 class="text-2xl font-bold text-orange-500">
+            ❤️ Admin Login
+        </h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Helping Hands Dashboard Access
+        </p>
+
+    </div>
+
+    <!-- FORM -->
+    <form method="post" action="/login" class="space-y-4">
+
+        <!-- USERNAME -->
+        <div>
+            <label class="text-sm font-medium text-gray-600">Username</label>
+            <input type="text" name="username"
+                   placeholder="Enter username"
+                   class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                   required>
+        </div>
+
+        <!-- PASSWORD -->
+        <div>
+            <label class="text-sm font-medium text-gray-600">Password</label>
+
+            <div class="relative">
+                <input type="password" name="password" id="password"
+                       placeholder="Enter password"
+                       class="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                       required>
+
+                <!-- SHOW/HIDE -->
+                <span onclick="togglePassword()"
+                      class="absolute right-3 top-3 text-sm text-gray-500 cursor-pointer">
+                    👁️
+                </span>
+            </div>
+        </div>
+
+        <!-- REMEMBER + FORGOT -->
+        <div class="flex justify-between items-center text-sm">
+
+            <label class="flex items-center space-x-2 text-gray-600">
+                <input type="checkbox">
+                <span>Remember me</span>
+            </label>
+
+            <a href="#" class="text-orange-500 hover:underline">
+                Forgot?
+            </a>
+
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit"
+                class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg font-semibold transition">
+            Login
+        </button>
+
+    </form>
+
+    <!-- FOOT NOTE -->
+    <p class="text-xs text-center text-gray-400 mt-6">
+        Secure Admin Access Only
+    </p>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+    function togglePassword() {
+        const pwd = document.getElementById("password");
+        pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+</script>
+
+</body>
+</html>

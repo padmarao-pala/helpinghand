@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Child</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+<main class="flex-1 p-8">
+
+    <div class="max-w-md mx-auto bg-white p-8 shadow rounded">
+
+        <h2 class="text-2xl font-bold mb-6 text-center text-orange-500">
+            ✏️ Edit Child
+        </h2>
+
+        <form th:action="@{/update-child}" method="post" enctype="multipart/form-data">
+
+            <!-- ✅ FIXED ID -->
+            <input type="hidden" name="id" th:value="${child.id}" />
+
+            <!-- NAME -->
+            <div class="mb-3">
+                <label>Name</label>
+                <input type="text" name="name"
+                       th:value="${child.name}"
+                       class="w-full border p-2 rounded" required>
+            </div>
+
+            <!-- DISEASE -->
+            <div class="mb-3">
+                <label>Disease</label>
+                <input type="text" name="disease"
+                       th:value="${child.disease}"
+                       class="w-full border p-2 rounded" required>
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="mb-3">
+                <label>Required Amount</label>
+                <input type="number" name="requiredAmount"
+                       th:value="${child.requiredAmount}"
+                       min="1"
+                       class="w-full border p-2 rounded" required>
+            </div>
+
+            <!-- CURRENT IMAGE -->
+            <div class="mb-3">
+                <label>Current Image</label>
+                <img th:if="${child.imageName != null}"
+                     th:src="@{'/uploads/' + ${child.imageName}}"
+                     class="w-full h-40 object-cover rounded mb-2"/>
+            </div>
+
+            <!-- NEW IMAGE -->
+            <div class="mb-3">
+                <label>Upload New Image</label>
+                <input type="file" name="imageFile"
+                       class="w-full border p-2 rounded">
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="flex gap-3">
+                <a href="/admin/children"
+                   class="w-1/2 text-center bg-gray-300 py-2 rounded">
+                    Back
+                </a>
+
+                <button type="submit"
+                        class="w-1/2 bg-orange-500 text-white py-2 rounded">
+                    Update
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<!-- ✅ SWEET ALERT -->
+<script th:inline="javascript">
+
+    let success = /*[[${success}]]*/ null;
+    let error = /*[[${error}]]*/ null;
+
+    if (success !== null) {
+        Swal.fire({
+            icon: 'success',
+            title: success
+        });
+    }
+
+    if (error !== null) {
+        Swal.fire({
+            icon: 'error',
+            title: error
+        });
+    }
+
+</script>
+
+</body>
+</html>

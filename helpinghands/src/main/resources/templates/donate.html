@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Donate - Helping Hands</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Razorpay -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+
+        body{
+            background: linear-gradient(to right,#f3f4f6,#e0f2fe);
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+    </style>
+
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- ================= HEADER ================= -->
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+
+    <div class="max-w-7xl mx-auto px-6 py-4
+                flex justify-between items-center">
+
+        <!-- LOGO -->
+        <a href="/"
+           class="text-2xl font-bold text-orange-500">
+
+            ❤️ Helping Hands
+
+        </a>
+
+        <!-- MENU -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+
+            <a href="/"
+               class="hover:text-orange-500 transition">
+
+                Home
+
+            </a>
+
+            <a href="/about"
+               class="hover:text-orange-500 transition">
+
+                About
+
+            </a>
+
+            <a href="/contact"
+               class="hover:text-orange-500 transition">
+
+                Contact
+
+            </a>
+
+        </nav>
+
+        <!-- DONATE BUTTON -->
+        <a href="/#cases"
+
+           class="bg-orange-500 hover:bg-orange-600
+                  text-white px-5 py-2 rounded-lg
+                  transition duration-300 text-sm">
+
+            ❤️ Donate
+
+        </a>
+
+    </div>
+
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="flex-grow flex items-center justify-center px-4 py-10">
+
+    <!-- DONATION CARD -->
+
+    <div class="bg-white shadow-2xl rounded-3xl overflow-hidden
+                max-w-5xl w-full grid md:grid-cols-2">
+
+        <!-- LEFT SIDE -->
+
+        <div class="bg-orange-50 flex flex-col justify-center items-center p-8">
+
+            <img th:src="@{'/uploads/' + ${child.imageName}}"
+
+                 class="w-52 h-52 rounded-full object-cover
+                        border-4 border-orange-400 shadow-lg">
+
+            <h2 class="text-3xl font-bold mt-5 text-gray-800"
+                th:text="${child.name}">
+            </h2>
+
+            <p class="text-gray-600 mt-2 text-lg"
+               th:text="${child.disease}">
+            </p>
+
+            <div class="mt-5 bg-red-100 text-red-600
+                        px-4 py-2 rounded-full text-sm font-semibold">
+
+                🚨 Urgent Medical Support Needed
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+
+        <div class="p-10">
+
+            <h3 class="text-3xl font-bold text-orange-500 mb-2">
+
+                ❤️ Make a Donation
+
+            </h3>
+
+            <p class="text-gray-500 mb-8">
+
+                Your small support can save a child's life.
+
+            </p>
+
+            <!-- HIDDEN -->
+            <input type="hidden" id="childId"
+                   th:value="${child.id}" />
+
+            <!-- NAME -->
+            <div class="mb-5">
+
+                <label class="block mb-2 font-medium">
+
+                    Your Name
+
+                </label>
+
+                <input type="text"
+                       id="donorName"
+
+                       placeholder="Enter your name"
+
+                       class="w-full border border-gray-300
+                              focus:border-orange-500
+                              focus:ring-2 focus:ring-orange-200
+                              outline-none p-3 rounded-xl">
+
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="mb-5">
+
+                <label class="block mb-2 font-medium">
+
+                    Donation Amount (₹)
+
+                </label>
+
+                <input type="number"
+                       id="amount"
+
+                       placeholder="Enter amount"
+
+                       class="w-full border border-gray-300
+                              focus:border-orange-500
+                              focus:ring-2 focus:ring-orange-200
+                              outline-none p-3 rounded-xl">
+
+            </div>
+
+            <!-- QUICK AMOUNTS -->
+
+            <div class="flex gap-3 mb-6 flex-wrap">
+
+                <button onclick="setAmount(500)"
+
+                        class="bg-gray-100 hover:bg-orange-100
+                               px-4 py-2 rounded-lg transition">
+
+                    ₹500
+
+                </button>
+
+                <button onclick="setAmount(1000)"
+
+                        class="bg-gray-100 hover:bg-orange-100
+                               px-4 py-2 rounded-lg transition">
+
+                    ₹1000
+
+                </button>
+
+                <button onclick="setAmount(2000)"
+
+                        class="bg-gray-100 hover:bg-orange-100
+                               px-4 py-2 rounded-lg transition">
+
+                    ₹2000
+
+                </button>
+
+                <button onclick="setAmount(5000)"
+
+                        class="bg-gray-100 hover:bg-orange-100
+                               px-4 py-2 rounded-lg transition">
+
+                    ₹5000
+
+                </button>
+
+            </div>
+
+            <!-- PAY BUTTON -->
+
+            <button onclick="payNow()"
+
+                    class="w-full bg-green-500 hover:bg-green-600
+                           text-white py-4 rounded-xl
+                           font-bold text-lg shadow-lg
+                           transition duration-300">
+
+                ❤️ Proceed to Payment
+
+            </button>
+
+            <!-- SECURE -->
+
+            <div class="mt-5 text-center text-sm text-gray-500">
+
+                🔒 100% Secure Payment via Razorpay
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-gray-900 text-white mt-10">
+
+    <div class="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-10">
+
+        <!-- ABOUT -->
+        <div>
+
+            <h3 class="text-2xl font-bold text-orange-400">
+
+                ❤️ Helping Hands
+
+            </h3>
+
+            <p class="mt-4 text-gray-300 leading-relaxed">
+
+                Helping children receive medical support and treatment
+                through donations and community support.
+
+            </p>
+
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div>
+
+            <h3 class="text-xl font-bold mb-4 text-orange-400">
+
+                Quick Links
+
+            </h3>
+
+            <ul class="space-y-3 text-gray-300">
+
+                <li>
+                    <a href="/"
+                       class="hover:text-orange-400 transition">
+
+                        Home
+
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/about"
+                       class="hover:text-orange-400 transition">
+
+                        About
+
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/contact"
+                       class="hover:text-orange-400 transition">
+
+                        Contact
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- CONTACT -->
+        <div>
+
+            <h3 class="text-xl font-bold mb-4 text-orange-400">
+
+                Contact Us
+
+            </h3>
+
+            <p class="text-gray-300 leading-8">
+
+                📧 help@helpinghands.com
+                <br>
+
+                📞 +91 6304024094
+                <br>
+
+                📍 Hyderabad, India
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- COPYRIGHT -->
+
+    <div class="border-t border-gray-700
+                py-4 text-center text-sm text-gray-400">
+
+        © 2026 Helping Hands.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+function setAmount(value){
+
+    document.getElementById("amount").value = value;
+
+}
+
+function payNow() {
+
+    let amount = document.getElementById("amount").value;
+    let donorName = document.getElementById("donorName").value;
+    let childId = document.getElementById("childId").value;
+
+    // VALIDATION
+
+    if (!donorName || !amount) {
+
+        Swal.fire({
+            icon:'warning',
+            title:'Missing Fields',
+            text:'Please fill all details'
+        });
+
+        return;
+    }
+
+    if(amount < 1){
+
+        Swal.fire({
+            icon:'error',
+            title:'Invalid Amount',
+            text:'Enter valid donation amount'
+        });
+
+        return;
+    }
+
+    // CREATE ORDER
+
+    fetch("/create-order?amount=" + amount, {
+
+        method: "POST"
+
+    })
+
+    .then(res => res.json())
+
+    .then(order => {
+
+        var options = {
+
+            key: "rzp_test_SaxoxJ9l3MJPId",
+
+            amount: order.amount,
+
+            currency: "INR",
+
+            name: "Helping Hands",
+
+            description: "Child Medical Donation",
+
+            image: "https://cdn-icons-png.flaticon.com/512/4202/4202841.png",
+
+            order_id: order.id,
+
+            theme: {
+                color: "#f97316"
+            },
+
+            handler: function (response) {
+
+                fetch("/donate/" + childId, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+
+                    body:
+                        "amount=" + amount +
+                        "&donorName=" + donorName +
+                        "&orderId=" + response.razorpay_order_id +
+                        "&paymentId=" + response.razorpay_payment_id +
+                        "&status=PAID"
+                })
+
+                .then(res => res.text())
+
+                .then(data => {
+
+                    Swal.fire({
+
+                        icon:'success',
+
+                        title:'Donation Successful ❤️',
+
+                        text:'Thank you for supporting this child',
+
+                        confirmButtonColor:'#22c55e'
+
+                    })
+
+                    .then(() => {
+
+                        window.location.href = "/";
+
+                    });
+
+                });
+
+            }
+
+        };
+
+        var rzp = new Razorpay(options);
+
+        rzp.open();
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Case Details</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+<!-- ================= HEADER ================= -->
+
+<header class="bg-white shadow-md">
+
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <h1 class="text-2xl font-bold text-orange-500">
+            ❤️ Helping Hands
+        </h1>
+
+        <nav class="space-x-6 hidden md:block">
+
+            <a href="/" class="hover:text-orange-500">
+                Home
+            </a>
+
+            <a href="/about" class="hover:text-orange-500">
+                About
+            </a>
+
+            <a href="/contact" class="hover:text-orange-500">
+                Contact
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+<!-- ================= CASE DETAILS ================= -->
+
+<div class="max-w-5xl mx-auto px-6 py-12">
+
+    <div th:if="${child != null}"
+
+         class="bg-white rounded-3xl shadow-xl overflow-hidden
+                border border-gray-200">
+
+        <div class="grid md:grid-cols-2">
+
+            <!-- IMAGE -->
+            <div>
+
+                <img th:src="@{'/uploads/' + ${child.imageName}}"
+                     class="w-full h-full object-cover">
+
+            </div>
+
+            <!-- DETAILS -->
+            <div class="p-8">
+
+                <!-- NAME -->
+                <h1 class="text-4xl font-bold"
+                    th:text="${child.name}">
+                </h1>
+
+                <!-- DISEASE -->
+                <p class="text-orange-500 text-lg mt-2"
+                   th:text="${child.disease}">
+                </p>
+
+                <!-- AMOUNT -->
+                <div class="mt-6 bg-orange-50 p-5 rounded-2xl">
+
+                    <h3 class="text-3xl font-bold text-green-600">
+
+                        ₹<span th:text="${child.requiredAmount}"></span>
+
+                    </h3>
+
+                    <p class="text-gray-500 mt-1">
+                        Required Amount
+                    </p>
+
+                </div>
+
+                <!-- STORY -->
+                <div class="mt-8">
+
+                    <h3 class="text-2xl font-bold mb-3">
+                        Medical Story
+                    </h3>
+
+                    <p class="text-gray-600 leading-8 whitespace-pre-line"
+                       th:text="${child.description}">
+                    </p>
+
+                </div>
+
+                <!-- BUTTON -->
+                <a th:href="@{'/donate/' + ${child.id}}"
+
+                   class="inline-block mt-8 bg-orange-500
+                          hover:bg-orange-600 text-white
+                          px-8 py-3 rounded-xl">
+
+                    Donate Now
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-gray-900 text-white mt-10">
+
+    <div class="max-w-6xl mx-auto px-6 py-8 grid md:grid-cols-3 gap-6">
+
+        <div>
+
+            <h3 class="text-lg font-bold text-orange-400">
+                Helping Hands
+            </h3>
+
+            <p class="text-sm mt-2 text-gray-300">
+
+                Helping children receive medical treatment through donations.
+
+            </p>
+
+        </div>
+
+        <div>
+
+            <h3 class="font-bold mb-2">
+                Quick Links
+            </h3>
+
+            <ul class="text-sm space-y-1 text-gray-300">
+
+                <li>
+                    <a href="/" class="hover:text-orange-400">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/about" class="hover:text-orange-400">
+                        About
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/contact" class="hover:text-orange-400">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div>
+
+            <h3 class="font-bold mb-2">
+                Contact
+            </h3>
+
+            <p class="text-sm text-gray-300">
+
+                Email: help@helpinghands.com
+                <br>
+
+                Phone: +91 6304024094
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="text-center text-sm text-gray-400
+                py-3 border-t border-gray-700">
+
+        © 2026 Helping Hands.
+        All rights reserved.
+
+    </div>
+
+</footer>
+
+</body>
+</html>

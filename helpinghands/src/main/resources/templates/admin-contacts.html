@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Contact Messages</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .table-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* 🔥 Fix table layout */
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .table th {
+            background: #343a40;
+            color: white;
+        }
+
+        th, td {
+            vertical-align: middle;
+            word-wrap: break-word;
+        }
+
+        /* Column widths */
+        .col-id { width: 5%; }
+        .col-name { width: 15%; }
+        .col-email { width: 20%; }
+        .col-message { width: 40%; }
+        .col-date { width: 20%; }
+
+        /* 🔥 Fix name wrapping */
+        .name-text {
+            white-space: normal;
+            word-break: break-word;
+            font-weight: 500;
+        }
+
+        /* 🔥 Fix message overflow */
+        .badge-msg {
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #e9f5ff;
+            color: #0d6efd;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        /* hover full message */
+        .badge-msg:hover {
+            white-space: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR -->
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid px-4">
+        <span class="navbar-brand fw-bold">❤️ Helping Hands Admin</span>
+
+        <div>
+            <a href="/admin" class="btn btn-outline-light btn-sm me-2">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+
+            <a href="/logout" class="btn btn-danger btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- 🔥 MAIN -->
+<div class="container mt-4">
+
+    <h3 class="fw-bold mb-4">📩 Contact Messages</h3>
+
+    <div class="table-box">
+
+        <!-- 🔍 SEARCH -->
+        <input type="text" id="searchInput" class="form-control mb-3"
+               placeholder="Search by name or email...">
+
+        <!-- 📊 TABLE -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+
+                <thead>
+                    <tr>
+                        <th class="col-id">#</th>
+                        <th class="col-name">Name</th>
+                        <th class="col-email">Email</th>
+                        <th class="col-message">Message</th>
+                        <th class="col-date">Date</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody">
+                    <tr th:each="c, stat : ${contacts}">
+
+                        <td th:text="${stat.count}"></td>
+
+                        <!-- Name -->
+                        <td class="name-text" th:text="${c.name}"></td>
+
+                        <!-- Email -->
+                        <td th:text="${c.email}"></td>
+
+                        <!-- Message -->
+                        <td>
+                            <span class="badge-msg"
+                                  th:text="${c.message}"
+                                  th:title="${c.message}">
+                            </span>
+                        </td>
+
+                        <!-- Date -->
+                        <td th:text="${#temporals.format(c.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- EMPTY -->
+        <div th:if="${#lists.isEmpty(contacts)}"
+             class="text-center text-muted mt-3">
+            No contact messages found 😔
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 🔍 SEARCH SCRIPT -->
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let value = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#tableBody tr");
+
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(value) ? "" : "none";
+        });
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

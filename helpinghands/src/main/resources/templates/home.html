@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HelpingHands - Children</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Children Needing Help</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="child : ${children}">
+            <div class="card h-100">
+                <img th:src="@{'/uploads/' + ${child.imageName}}" class="card-img-top" alt="Child Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${child.name}"></h5>
+                    <p class="card-text">Disease: <span th:text="${child.disease}"></span></p>
+                    <p class="card-text">Required: ₹<span th:text="${child.requiredAmount}"></span></p>
+                    <p class="card-text">Collected: ₹<span th:text="${child.collectedAmount}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

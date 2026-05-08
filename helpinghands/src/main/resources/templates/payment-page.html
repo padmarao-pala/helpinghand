@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Page</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h2>Complete your donation</h2>
+
+    <p th:text="'Donor Name: ' + ${donorName}"></p>
+    <p th:text="'Amount: ₹' + ${safeAmount/100}"></p>
+
+    <button id="rzp-button">Pay Now</button>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var options = {
+            "key": "[[${keyId}]]",
+            "amount": [[${safeAmount}]], // number in paise
+            "currency": "INR",
+            "name": "HelpingHands",
+            "description": "Donation",
+            "order_id": "[[${orderId}]]",
+            "handler": function(response){
+                window.location.href = "/payment-success?paymentId=" 
+                    + response.razorpay_payment_id 
+                    + "&orderId=[[${orderId}]]";
+            },
+            "prefill": {
+                "name": "[[${donorName}]]",
+                "email": "example@email.com"
+            },
+            "theme": {"color": "#22c55e"}
+        };
+
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+        /*]]>*/
+    </script>
+</body>
+</html>
